@@ -144,7 +144,6 @@ export default function KmsDashboardClient({ stats }: KmsDashboardClientProps) {
             </div>
             <div className='space-y-6'>
               <SentimentHarvesting />
-              <CulturalCalendar />
             </div>
           </div>
         </TabsContent>
