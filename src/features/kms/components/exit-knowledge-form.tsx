@@ -81,9 +81,7 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
           </div>
           {index < steps.length - 1 && (
             <div
-              className={`w-16 h-0.5 mx-2 ${
-                currentStep > step.id ? 'bg-primary' : 'bg-muted'
-              }`}
+              className={`w-16 h-0.5 mx-2 ${currentStep > step.id ? 'bg-primary' : 'bg-muted'}`}
             />
           )}
         </div>
@@ -266,11 +264,35 @@ function Step3Checklist({
 
       <div className='space-y-3'>
         {[
-          { key: 'documentsHanded' as const, label: 'Documents Handed Over', description: 'All relevant documents, SOPs, and guides have been handed to your supervisor.' },
-          { key: 'contactsShared' as const, label: 'Contacts Shared', description: 'Important contacts, partner information, and key stakeholders have been shared.' },
-          { key: 'processesDocumented' as const, label: 'Processes Documented', description: 'All critical processes and workflows have been documented.' },
-          { key: 'trainingProvided' as const, label: 'Training Provided', description: 'Adequate training has been provided to team members who will cover your responsibilities.' },
-          { key: 'handoverCompleted' as const, label: 'Handover Complete', description: 'All responsibilities have been formally handed over to designated team members.' }
+          {
+            key: 'documentsHanded' as const,
+            label: 'Documents Handed Over',
+            description:
+              'All relevant documents, SOPs, and guides have been handed to your supervisor.'
+          },
+          {
+            key: 'contactsShared' as const,
+            label: 'Contacts Shared',
+            description:
+              'Important contacts, partner information, and key stakeholders have been shared.'
+          },
+          {
+            key: 'processesDocumented' as const,
+            label: 'Processes Documented',
+            description: 'All critical processes and workflows have been documented.'
+          },
+          {
+            key: 'trainingProvided' as const,
+            label: 'Training Provided',
+            description:
+              'Adequate training has been provided to team members who will cover your responsibilities.'
+          },
+          {
+            key: 'handoverCompleted' as const,
+            label: 'Handover Complete',
+            description:
+              'All responsibilities have been formally handed over to designated team members.'
+          }
         ].map((item) => (
           <Card
             key={item.key}
@@ -362,7 +384,9 @@ function Step4Review({ data }: { data: FormData }) {
           <div className='w-full bg-muted rounded-full h-2'>
             <div
               className='bg-primary h-2 rounded-full transition-all'
-              style={{ width: `${(completedChecklist / Object.keys(data.checklist).length) * 100}%` }}
+              style={{
+                width: `${(completedChecklist / Object.keys(data.checklist).length) * 100}%`
+              }}
             />
           </div>
         </CardContent>
@@ -382,7 +406,9 @@ function Step4Review({ data }: { data: FormData }) {
           {data.undocumentedProcesses && (
             <div>
               <p className='font-medium mb-1'>Undocumented Processes:</p>
-              <p className='text-muted-foreground whitespace-pre-wrap'>{data.undocumentedProcesses}</p>
+              <p className='text-muted-foreground whitespace-pre-wrap'>
+                {data.undocumentedProcesses}
+              </p>
             </div>
           )}
           {data.adviceForSuccessor && (
@@ -446,14 +472,14 @@ export default function ExitKnowledgePage() {
           adviceForSuccessor: formData.adviceForSuccessor,
           contactsToShare: formData.contactsToShare,
           mediaUrl: formData.mediaUrl,
-          checklist: formData.checklist,
-        }),
+          checklist: formData.checklist
+        })
       });
-      
+
       if (!response.ok) {
         throw new Error('Submission failed');
       }
-      
+
       toast.success('Exit Knowledge Capture submitted successfully!');
       router.push('/dashboard/kms');
     } catch {
@@ -464,7 +490,7 @@ export default function ExitKnowledgePage() {
   };
 
   return (
-    <div className='max-w-3xl mx-auto'>
+    <div className='w-full mx-auto'>
       <div className='text-center mb-8'>
         <h1 className='text-2xl font-bold mb-2'>Exit Knowledge Capture</h1>
         <p className='text-muted-foreground'>
@@ -494,10 +520,7 @@ export default function ExitKnowledgePage() {
             </Button>
 
             {currentStep < 4 ? (
-              <Button
-                onClick={() => setCurrentStep((s) => s + 1)}
-                disabled={!canProceed()}
-              >
+              <Button onClick={() => setCurrentStep((s) => s + 1)} disabled={!canProceed()}>
                 Next
                 <Icons.chevronRight className='ml-2 h-4 w-4' />
               </Button>

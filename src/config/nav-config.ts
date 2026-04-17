@@ -21,11 +21,6 @@ export const navGroups: NavGroup[] = [
             icon: 'fileText'
           },
           {
-            title: 'Tacit Map',
-            url: '/dashboard/kms/map',
-            icon: 'map'
-          },
-          {
             title: 'Weekly Pro Tips',
             url: '/dashboard/kms/pro-tips',
             icon: 'play'

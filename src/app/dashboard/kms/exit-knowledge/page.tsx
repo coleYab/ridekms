@@ -1,3 +1,4 @@
+import PageContainer from '@/components/layout/page-container';
 import ExitKnowledgeForm from '@/features/kms/components/exit-knowledge-form';
 
 export const metadata = {
@@ -5,5 +6,9 @@ export const metadata = {
 };
 
 export default async function ExitKnowledgePage() {
-  return <ExitKnowledgeForm />;
+  return (
+    <PageContainer>
+      <ExitKnowledgeForm />
+    </PageContainer>
+  );
 }

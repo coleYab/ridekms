@@ -34,7 +34,21 @@ function ProTipCardSkeleton() {
   );
 }
 
-function ProTipCard({ proTip }: { proTip: { id: number; title: string; description: string; duration: number; author: string; role: string; tags: string[]; likes: number; featured: boolean } }) {
+function ProTipCard({
+  proTip
+}: {
+  proTip: {
+    id: number;
+    title: string;
+    description: string;
+    duration: number;
+    author: string;
+    role: string;
+    tags: string[];
+    likes: number;
+    featured: boolean;
+  };
+}) {
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(proTip.likes);
 
@@ -61,7 +75,10 @@ function ProTipCard({ proTip }: { proTip: { id: number; title: string; descripti
                     <Icons.star className='mr-1 h-3 w-3' /> Featured
                   </Badge>
                 )}
-                <Badge variant='secondary' className='text-[10px] uppercase font-bold tracking-wider'>
+                <Badge
+                  variant='secondary'
+                  className='text-[10px] uppercase font-bold tracking-wider'
+                >
                   Audio Bulletin
                 </Badge>
               </div>
@@ -71,7 +88,7 @@ function ProTipCard({ proTip }: { proTip: { id: number; title: string; descripti
         </CardHeader>
         <CardContent className='space-y-4'>
           <p className='text-sm text-muted-foreground line-clamp-2'>{proTip.description}</p>
-          
+
           <div className='flex items-center gap-4 text-sm text-muted-foreground'>
             <span className='flex items-center gap-1'>
               <Icons.user className='h-4 w-4' />
@@ -81,13 +98,17 @@ function ProTipCard({ proTip }: { proTip: { id: number; title: string; descripti
           </div>
 
           <div className='flex items-center gap-2'>
-            <Button variant='outline' size='sm' className='flex-1 bg-green-50 hover:bg-green-100 border-green-200 text-green-700'>
+            <Button
+              variant='outline'
+              size='sm'
+              className='flex-1 bg-green-50 hover:bg-green-100 border-green-200 text-green-700'
+            >
               <Icons.play className='mr-2 h-4 w-4' />
               Listen
             </Button>
-            <Button 
-              variant='ghost' 
-              size='sm' 
+            <Button
+              variant='ghost'
+              size='sm'
               className={cn('h-8 px-2 gap-1.5', liked && 'text-red-500 bg-red-50')}
               onClick={handleLike}
             >
@@ -103,7 +124,10 @@ function ProTipCard({ proTip }: { proTip: { id: number; title: string; descripti
           {proTip.tags.length > 0 && (
             <div className='flex flex-wrap gap-1 pt-2 border-t'>
               {proTip.tags.slice(0, 3).map((tag) => (
-                <span key={tag} className='inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px]'>
+                <span
+                  key={tag}
+                  className='inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px]'
+                >
                   #{tag}
                 </span>
               ))}
@@ -132,7 +156,7 @@ export default function ProTipsList() {
   const otherTips = data.proTips.filter((t) => !t.featured);
 
   return (
-    <div className='space-y-8'>
+    <div className='w-full space-y-8'>
       {featuredTips.length > 0 && (
         <section>
           <h2 className='text-lg font-semibold mb-4 flex items-center gap-2'>
