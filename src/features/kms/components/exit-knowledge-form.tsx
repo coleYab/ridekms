@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Icons } from '@/components/icons';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { KnowledgeHarvestUploader } from './knowledge-harvest-uploader';
 
 interface FormData {
   fullName: string;
@@ -179,16 +180,8 @@ function Step2KnowledgeSummary({
   data: FormData;
   updateData: (data: Partial<FormData>) => void;
 }) {
-  const [isRecording, setIsRecording] = useState(false);
-
-  const simulateRecording = () => {
-    setIsRecording(true);
-    toast.info('Accessing microphone/camera...');
-    setTimeout(() => {
-      setIsRecording(false);
-      updateData({ mediaUrl: 'https://storage.ride.com/knowledge/harvest-v1.mp4' });
-      toast.success('Video session recorded successfully!');
-    }, 3000);
+  const handleUploadComplete = (url: string, _fileName: string) => {
+    updateData({ mediaUrl: url });
   };
 
   return (
@@ -200,35 +193,11 @@ function Step2KnowledgeSummary({
         </p>
       </div>
 
-      <div className='bg-green-50 border border-green-200 rounded-lg p-4 mb-6'>
-        <div className='flex items-start gap-3'>
-          <div className='h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0'>
-            <Icons.video className='h-5 w-5' />
-          </div>
-          <div className='flex-1'>
-            <h4 className='text-sm font-bold text-green-900'>Knowledge Harvest: Exit Library</h4>
-            <p className='text-xs text-green-700 mt-1 mb-3'>
-              We highly encourage recording a short 2-5 minute video or audio summarizing your "Street Intuition" and complex problem-solving experiences.
-            </p>
-            {data.mediaUrl ? (
-              <div className='flex items-center gap-2 text-green-600 bg-white border border-green-200 rounded px-2 py-1.5 text-xs w-fit'>
-                <Icons.check className='h-3 w-3' />
-                Recording Attached (harvest-v1.mp4)
-                <Button variant='ghost' size='sm' className='h-4 px-1 text-[10px]' onClick={() => updateData({ mediaUrl: '' })}>Remove</Button>
-              </div>
-            ) : (
-              <Button 
-                size='sm' 
-                className='bg-green-600 hover:bg-green-700 text-white gap-2'
-                onClick={simulateRecording}
-                disabled={isRecording}
-              >
-                {isRecording ? <Icons.spinner className='h-3 w-3 animate-spin' /> : <Icons.play className='h-3 w-3 fill-current' />}
-                Start Capture Session
-              </Button>
-            )}
-          </div>
-        </div>
+      <div className='mb-6'>
+        <KnowledgeHarvestUploader
+          onUploadComplete={handleUploadComplete}
+          existingUrl={data.mediaUrl}
+        />
       </div>
 
       <div className='space-y-2'>
@@ -460,10 +429,38 @@ export default function ExitKnowledgePage() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    toast.success('Exit Knowledge Capture submitted successfully!');
-    setIsSubmitting(false);
-    router.push('/dashboard/kms');
+    try {
+      const response = await fetch('/api/kms/exit-knowledge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          employeeId: formData.employeeId,
+          department: formData.department,
+          role: formData.role,
+          yearsOfService: formData.yearsOfService,
+          lastWorkDate: formData.lastWorkDate,
+          reasonForLeaving: formData.reasonForLeaving,
+          keyKnowledge: formData.keyKnowledge,
+          undocumentedProcesses: formData.undocumentedProcesses,
+          adviceForSuccessor: formData.adviceForSuccessor,
+          contactsToShare: formData.contactsToShare,
+          mediaUrl: formData.mediaUrl,
+          checklist: formData.checklist,
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Submission failed');
+      }
+      
+      toast.success('Exit Knowledge Capture submitted successfully!');
+      router.push('/dashboard/kms');
+    } catch {
+      toast.error('Failed to submit. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

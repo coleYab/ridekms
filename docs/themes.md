@@ -494,10 +494,10 @@ export const DEFAULT_THEME = 'your-theme-name'; // Change this value
 
 **Benefits of this approach:**
 
-✅ No code duplication - defined once, used everywhere  
-✅ Type-safe - TypeScript ensures consistency  
-✅ Easy to change - update one line in one file  
-✅ Well-documented - clear comments explain its purpose  
+✅ No code duplication - defined once, used everywhere
+✅ Type-safe - TypeScript ensures consistency
+✅ Easy to change - update one line in one file
+✅ Well-documented - clear comments explain its purpose
 ✅ Immediate application - no flash of unstyled content
 
 ## Using Google Fonts in Themes

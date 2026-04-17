@@ -8,7 +8,7 @@ export const navGroups: NavGroup[] = [
         title: 'Knowledge Base',
         url: '/dashboard/kms',
         icon: 'book',
-        isActive: false,
+        isActive: true,
         items: [
           {
             title: 'Dashboard',

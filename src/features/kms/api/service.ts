@@ -136,7 +136,7 @@ export async function getArticleVersions(articleId: number) {
   return { success: true, versions: fakeKMS.versions.filter(v => v.articleId === articleId) };
 }
 
-export async function toggleBookmark(userId: number, type: string, itemId: number) {
+export async function toggleBookmark(_userId: number, _type: string, _itemId: number) {
   await new Promise(r => setTimeout(r, 100));
   return { success: true };
 }
